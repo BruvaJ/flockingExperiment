@@ -58,15 +58,7 @@ function updateUI(){
 }
 
 
-document.getElementById('forward').addEventListener("click", function(){
+document.getElementById('move').addEventListener("click", function(){
   moveForward();
   updateUI();
-});
-document.getElementById('right').addEventListener("click", function(){
-    turnRight();
-    updateUI();
-});
-document.getElementById('left').addEventListener("click", function(){
-    turnLeft();
-    updateUI();
 });
