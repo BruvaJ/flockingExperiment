@@ -8,14 +8,9 @@ var maxSpeed = 15;
 
 class Boid {
 
-  // var location;
-  // var accel;
-  // var height;
-  // var width;
-
   constructor(){
     this.location = [200, 200];
-    this.accel = [5, 0]; // default to moving right one pixel at a time
+    this.accel = [5, 0];
     this.height = 5;
     this.width = 5;
   }
@@ -23,7 +18,6 @@ class Boid {
   updateLocation(){
     this.location[0] += this.accel[0];
     this.location[1] += this.accel[1];
-    // console.log(this.location[0]);
   }
 
   alterAcceleration(x, y){
@@ -51,11 +45,6 @@ class Boid {
 
 
   checkForEdge(){
-    // bounceback
-    // if(this.location[0] + flock[i].width > canvas.width || this.location[0] + flock[i].width < 0) this.accel[0] = this.accel[0] * -1;
-    // if(this.location[1] + flock[i].height > canvas.height || this.location[1] + flock[i].height < 0) this.accel[1] = this.accel[1] * -1;
-
-    // other side
     if(this.location[0] + flock[i].width > canvas.width)   this.location[0] = 0;
     if(this.location[0] + flock[i].width < 0)              this.location[0] = canvas.width;
     if(this.location[1] + flock[i].height > canvas.height) this.location[1] = 0;
@@ -93,44 +82,20 @@ class Boid {
     var fastestY = this.accel[1];
     var countAligned = 0;
     for(i in flock){
-        // isnt this instance   ( )                                                 // within alignmentDistance
       if(flock[i] !== this && flock[i].location[0] >= this.location[0] - alignmentDistance && flock[i].location[0] <= this.location[0] + alignmentDistance  && flock[i].location[0] >= this.location[0] - alignmentDistance && flock[i].location[1] <= this.location[1] + alignmentDistance){
         countAligned ++;
         sumX += flock[i].accel[0];
         sumY += flock[i].accel[1];
-        // if(fastestX > flock[i].accel[0]) this.accel[0] = flock[i].accel[0];
-        // if(fastestY > flock[i].accel[1]) this.accel[1] = flock[i].accel[1];
         console.log('within Distance');
       }
     }
-    // 1) average
     var averageX = sumX / countAligned;
     var averageY = sumY / countAligned;
 
-    // a)
-    // if(averageX > 0 && averageY > 0){
-    //   this.accel[0] += (averageX < this.accel[0]) ? -1 : 1;
-    //   this.accel[1] += (averageY < this.accel[1]) ? -1 : 1;
-    // }
-
-    // b>
-    // if(averageX > 0 && averageY > 0){
-    //   this.accel[0] = averageX;
-    //   this.accel[1] = averageY;
-    // }
-
-    // c)
     if(averageX > this.accel[0]) this.accel[0] ++;
     if(averageX < this.accel[0]) this.accel[0] --;
     if(averageY > this.accel[1]) this.accel[1] ++;
     if(averageY < this.accel[1]) this.accel[1] --;
-
-
-    // 3) fastest
-    // this.accel[0] = fastestX;
-    // this.accel[1] = fastestY;
-    // console.log(fastestX);
-    // console.log(fastestY);
   }
 
   speedCheck(){
@@ -147,10 +112,7 @@ ctx.clearRect(0, 0, canvas.width, canvas.height);
   for (i in flock){
 
     console.log(flock);
-    // ctx.clearRect(flock[i].location[0] + flock[i].width / 2, flock[i].location[1] + flock[i].height / 2 - 1, flock[i].width, flock[i].height); // just gonna have to clear everything anyway
     flock[i].checkForEdge();
-    // flock[i].separation();
-    // flock[i].cohesion();
     flock[i].updateLocation();
     flock[i].randomElement();
     ctx.fillRect(flock[i].location[0] + flock[i].width / 2, flock[i].location[1] + flock[i].height / 2, flock[i].width, flock[i].height);
