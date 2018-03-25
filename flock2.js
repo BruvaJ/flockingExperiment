@@ -123,7 +123,7 @@ ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 window.onload = start();
 
-document.getElementById('forward').addEventListener("click", function(){
+document.getElementById('move').addEventListener("click", function(){
   render();
 });
 
